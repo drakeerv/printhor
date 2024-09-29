@@ -26,10 +26,10 @@ use printhor_hwa_common::StandardControllerMutex;
 #[global_allocator]
 static HEAP: CortexMHeap = CortexMHeap::empty();
 
-pub const MACHINE_TYPE: &str = "SKR";
-pub const MACHINE_BOARD: &str = "SKR_MINI_E3_V2";
-/// ARM Cortex M3 @72MHZ, 48kB SRAM, 256kB Program
-pub const MACHINE_PROCESSOR: &str = "STM32F103RCT6";
+pub const MACHINE_TYPE: &str = "CREALITY";
+pub const MACHINE_BOARD: &str = "CREALITY_V4";
+/// ARM Cortex M3 @72MHZ, 48kB SRAM, 512kB Program
+pub const MACHINE_PROCESSOR: &str = "STM32F103RE";
 pub const PROCESSOR_SYS_CK_MHZ: u32 = 72_000_000;
 
 pub const MAX_STATIC_MEMORY: usize = 8192;
