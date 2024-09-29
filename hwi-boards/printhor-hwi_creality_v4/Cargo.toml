@@ -1,0 +1,84 @@
+[package]
+name = "printhor-hwi_skr_mini_e3"
+version = "0.0.4"
+edition = "2021"
+authors = ["Carlos Barrales Ruiz <cbruiz@gmail.com>"]
+description = "Printhor Hardware Abstraction for SK3 Mini E3 V2.0 and SK3 Mini E3 V3.0 boards"
+readme = "README.md"
+repository = "https://github.com/cbruiz/printhor"
+keywords = ["hardware", "abstraction"]
+license = "MIT"
+documentation = "https://docs.rs/prinThor"
+homepage = "https://github.com/cbruiz/printhor"
+
+[lib]
+
+[features]
+# Versions/boards
+skr_mini_e3_v2 = ["embassy-time/tick-hz-1_000_000", "embassy-executor/task-arena-size-16384", "embassy-stm32/stm32f103rc", "embassy-stm32/time-driver-tim4", "without-vref-int"]
+skr_mini_e3_v3 = ["embassy-time/tick-hz-1_000_000", "embassy-executor/task-arena-size-16384", "embassy-stm32/stm32g0b1re", "embassy-stm32/time-driver-tim4"]
+with-defmt = ["printhor-hwa-common/defmt", "embassy-stm32/defmt"]
+# Hardware device features
+with-serial-usb = ["embassy-usb"]
+with-printjob = []
+with-serial-port-1 = []
+with-serial-port-2 = []
+with-spi = ["embedded-hal"]
+with-hot-end = ["embedded-hal"]
+with-hot-bed = ["embedded-hal"]
+with-motion = []
+with-probe = ["embedded-hal"]
+with-endstops = []
+with-sdcard = []
+with-fan-layer = ["embedded-hal"]
+with-fan-extra-1 = ["embedded-hal"]
+with-laser = ["embedded-hal"]
+with-neo = ["embedded-hal"]
+with-trinamic = []
+with-ps-on = []
+with-display = [] # Broken
+without-bootloader = ["embassy-stm32/memory-x"]
+use-hsi = []
+
+with-x-axis = []
+with-y-axis = []
+with-z-axis = []
+with-e-axis = []
+
+nightly = []
+cooperative = ["embassy-executor/integrated-timers"]
+executor-interrupt = ["embassy-executor/executor-interrupt", "embassy-time/generic-queue", "embassy-time/generic-queue-128"]
+verbose-timings = []
+sdcard-uses-spi = []
+ili9341_parallel = []
+ili9341_spi = ["with-spi"]
+without-vref-int = []
+without-ringbuffer = []
+
+[dependencies]
+defmt = {version = "0.3", default-features = false }
+
+printhor-hwa-common = { version = "0.0"}
+
+embassy-stm32 = { version = "*", default-features = false, features = ["defmt", "rt", "unstable-pac"] }
+embassy-executor = { version = "0.6.0", default-features = false, features = ["defmt", "executor-thread", "arch-cortex-m"] }
+embassy-sync = { version = "*", features = ["defmt"] }
+embassy-time = { version = "*", features = ["defmt", "defmt-timestamp-uptime"] }
+embassy-futures = { version = "*", features = [] }
+embassy-usb = { version = "*", features = [], optional = true }
+
+cortex-m = { version = "0.7.7", features = ["inline-asm", "critical-section-single-core"] }
+cortex-m-rt = { version = "0.7.0", default-features = false, features = [] }
+alloc-cortex-m = { version = "0.4.4", default-features = false, features = []}
+
+embedded-hal = { version = "1.0.0", default-features = false, optional = true }
+embedded-hal-02 = { package = "embedded-hal", version = "0.2.7", features = ["unproven"] }
+
+async-gcode = {version = "0", default-features = false, features=["parse-trailing-comment", "optional-value", "string-value"] }
+futures = { version = "0.3.17", default-features = false, features = [] }
+
+cfg-if = { version = "1.0.0" }
+const_env = { version = "0.1" }
+
+[patch.crates-io]
+async-gcode = { path = "../../libs/async-gcode" }
